@@ -1,0 +1,26 @@
+#!/bin/bash
+# We won't check for root permission for it's in early stage and started by systemd.
+
+rm -f /tmp/bootArgs
+
+echo " ????" >> /tmp/bootArgs
+echo ' "Continue"' >> /tmp/bootArgs
+
+efibootmgr | while read line; do
+	if [[ "$line" =~ ^BootOrder ]]; then
+		echo $line | sed -e "s/BootOrder: //g" > /tmp/bootOrder
+	fi
+	if [[ "$line" =~ ^Boot[0-9a-eA-E][0-9a-eA-E][0-9a-eA-E][0-9a-eA-E] ]]; then
+		echo " "${line:4:4} >> /tmp/bootArgs
+		echo ' "'$line'"' >> /tmp/bootArgs
+	fi
+done
+
+answer=$(cat /tmp/bootArgs | xargs zenity --timeout 5 --height 500 --width 500 --list --text="Current Boot Order ${bootOrder}.\nChoose your operation:" --column="Boot NUM" --column="Desc")
+
+if [[ "$answer" =~ [0-9a-eA-E][0-9a-eA-E][0-9a-eA-E][0-9a-eA-E] ]]; then
+	echo "$answer"
+	efibootmgr -n $answer
+else
+	echo "Pass"
+fi
