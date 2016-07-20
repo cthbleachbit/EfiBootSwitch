@@ -1,2 +1,4 @@
 #!/bin/bash
-startx
+
+export GDK_SCALE=2
+xinit /usr/local/lib/efi-boot-switch/xinitrc -- :0

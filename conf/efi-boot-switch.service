@@ -1,0 +1,11 @@
+[Unit]
+Description=Switch OS
+After=basic.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/local/bin/efi-boot-switch-wrapper
+
+[Install]
+RequiredBy=display-manager.service

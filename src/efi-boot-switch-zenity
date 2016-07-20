@@ -1,7 +1,6 @@
 #!/bin/bash
 # We won't check for root permission for it's in early stage and started by systemd.
 
-export GDK_SCALE=2
 rm -f /tmp/bootArgs
 
 echo " ????" >> /tmp/bootArgs
@@ -17,7 +16,7 @@ efibootmgr | while read line; do
 	fi
 done
 
-answer=$(cat /tmp/bootArgs | xargs zenity --timeout 7 --height 500 --width 500 --list --text="Current Boot Order ${bootOrder}.\nChoose your operation:" --column="Boot NUM" --column="Desc")
+answer=$(cat /tmp/bootArgs | xargs zenity --timeout 7 --height 300 --width 500 --list --text="Current Boot Order ${bootOrder}.\nChoose your operation:" --column="Boot NUM" --column="Desc")
 
 if [[ "$answer" =~ [0-9a-eA-E][0-9a-eA-E][0-9a-eA-E][0-9a-eA-E] ]]; then
 	echo "$answer"
