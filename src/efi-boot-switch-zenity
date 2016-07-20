@@ -16,6 +16,7 @@ efibootmgr | while read line; do
 	fi
 done
 
+bootOrder=$(cat /tmp/bootOrder)
 answer=$(cat /tmp/bootArgs | xargs zenity --timeout 7 --height 300 --width 500 --list --text="Current Boot Order ${bootOrder}.\nChoose your operation:" --column="Boot NUM" --column="Desc")
 
 if [[ "$answer" =~ [0-9a-eA-E][0-9a-eA-E][0-9a-eA-E][0-9a-eA-E] ]]; then
