@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=EFI Boot Switch
+Comment=Reboot To Other Oses
+Exec=sudo efi-boot-switch-zenity
+Icon=edit-redo
+Terminal=true
+Type=Application
