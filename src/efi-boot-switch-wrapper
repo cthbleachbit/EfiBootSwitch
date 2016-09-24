@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export GDK_SCALE=2
+export GDK_SCALE=1
 xinit /usr/local/lib/efi-boot-switch/xinitrc -- :0
