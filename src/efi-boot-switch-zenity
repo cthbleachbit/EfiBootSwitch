@@ -1,8 +1,13 @@
 #!/bin/bash
 # We won't check for root permission for it's in early stage and started by systemd.
 
+title="Choose operating system"
+
+[[ "${1}" == "-b" ]] && timeout="--timeout 7" || timeout="" 
+[[ "${1}" == "-b" ]] && warn="Timeout in 7 seconds\n" || warn="" 
 rm -f /tmp/bootArgs
 
+echo "${timeout}"
 echo " ????" >> /tmp/bootArgs
 echo ' "Continue"' >> /tmp/bootArgs
 
@@ -17,7 +22,7 @@ efibootmgr | while read line; do
 done
 
 bootOrder=$(cat /tmp/bootOrder)
-answer=$(cat /tmp/bootArgs | xargs zenity --timeout 7 --height 300 --width 500 --list --text="Current Boot Order ${bootOrder}.\nChoose your operation:" --column="Boot NUM" --column="Desc")
+answer=$(cat /tmp/bootArgs | xargs zenity ${timeout} --height 300 --width 500 --title "${title}" --list --text="Current Boot Order ${bootOrder}\n${warn}Reboot into:" --column="Boot NUM" --column="Desc")
 
 if [[ "$answer" =~ [0-9a-eA-E][0-9a-eA-E][0-9a-eA-E][0-9a-eA-E] ]]; then
 	echo "$answer"

@@ -2,6 +2,6 @@
 Name=EFI Boot Switch
 Comment=Reboot To Other Oses
 Exec=sudo efi-boot-switch-zenity
-Icon=edit-redo
+Icon=system-reboot
 Terminal=true
 Type=Application
